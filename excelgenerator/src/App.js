@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
@@ -22,8 +22,7 @@ function App() {
         }
       );
       setTableData(response.data.data);
-      setFieldNames(response.data.fieldNames.map((row) => row[0]))
-      console.log(fieldNames)
+      console.log(fieldNames);
     } catch (error) {
       console.error("Error fetching dynamic table data:", error);
     }
@@ -42,6 +41,10 @@ function App() {
   const handleFileUpload = (e) => {
     setFile(e.target.files[0]);
   };
+
+  useEffect(() => {
+    setFieldNames([...fields]);
+  }, [fields]);
 
   const generateExcelTemplate = async (e) => {
     e.preventDefault();
